@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-allauth = "*"
+pylint = "*"
+whitenoise = "*"
 
 [dev-packages]
 
