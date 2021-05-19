@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %} www.stocksonthebeach.com {% endblock %}
+
+{% block body %}
+
+<div class="jumbotron">
+	<h1>Make your stock portfolio shine</h1>
+	<p>Welcome to www.stocksonthebeach.com, the program that helps increase the value of your investments</p>
+</div> 
+
+<div class="row">
+
+    <div class="col-md-4">
+    	<div class="panel panel-success">
+        	<div class="panel-heading"><h3>Why use this</h3></div>
+        	<div class="panel-body">
+        		<h2>Stock investing is hard, this makes it easier</h2>
+        	</div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+    	<div class="panel panel-success">
+        	<div class="panel-heading"><h3>How does it work</h3></div>
+        	<div class="panel-body">
+        		<h2>You pick the stock, we'll tell you when to buy and sell more.</h2>
+        	</div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+    	<div class="panel panel-success">
+        	<div class="panel-heading"><h3>What does it cost</h3></div>
+        	<div class="panel-body">
+        		<h2>Basic registration is Free!</h2>
+        	</div>
+        </div>
+    </div>
+
+
+</div> 
+
+<!-- Statistics -->
+<div class="well">
+	<div class="row"> <center>
+	
+		<div class="col-md-4">
+			<h2>Portfolios tracked</h2>
+			<h3>{{portfolios}}</h3>
+		</div>
+		<div class="col-md-4">
+			<h2>Holdings managed</h2>
+			<h3>{{holdings}}</h3>
+		</div>
+		<div class="col-md-4">
+			<h2>Advice alerts given</h2>
+			<h3>{{alerts}}</h3>
+		</div>
+		</center>
+	</div>
+</div>    
+
+{% endblock %}
+

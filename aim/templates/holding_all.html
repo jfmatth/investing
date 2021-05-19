@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if object_list %}
+        <h1>All holdings</h1>
+        <table>
+            <tr>
+                <td>Stock</td>
+            </tr>
+            {% for p in object_list %}
+                <tr>
+                    <td><a href="/aim/holding/{{p.id}}"> {{p}} </a> </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><a href="/aim/holding/add/">Add Holding</a> </td>
+            </tr>   
+        </table>
+    {% endif %}
+{% endblock %}
