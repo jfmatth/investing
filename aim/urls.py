@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 
-from aim.views import HoldingCreateView, MainView, PortfolioUpdate, PortfolioCreate, PortfolioDelete
+from aim.views import HoldingCreateView, MainView, PortfolioUpdate, PortfolioCreate, PortfolioDelete, HoldingUpdateView
 
 urlpatterns = [
     
@@ -39,10 +39,11 @@ urlpatterns = [
     # url(r'^holding/(?P<pk>\d+)/$',
     #     login_required(HoldingUpdateView.as_view()),
     #     name = "holding_view"),
-
+    path('holding/<int:pk>', login_required( HoldingUpdateView.as_view()), name="holding_view" )
     # url(r'^holding/delete/(?P<pk>\d+)/$',
     #     login_required(HoldingDeleteView.as_view()),
     #     name = "holding_delete"),
+
 
 
 

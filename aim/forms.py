@@ -7,6 +7,21 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+class ControlForm(forms.ModelForm):
+    class Meta:
+        model = AimController
+        fields = ('started',
+                  'control',
+                  'sellsafe',
+                  'buysafe', 
+                  'buymin',
+                  'sellmin',
+                  'buyperc', 
+                  'sellperc',
+                  )
+       
+
+
 class PortfolioForm(forms.ModelForm):
     user = None
     
@@ -60,18 +75,31 @@ class HoldingForm(forms.ModelForm):
         fields = ('symbol', 'reason' )
 
 
+class TransactionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(TransactionForm,self).__init__(*args, **kwargs)
 
-class ControlForm(forms.ModelForm):
+#         # The holding field is for display only, and convenience, but they can't change it.
+#         self.fields['holding'].initial = self.initial['holding_id']
+#         self.fields['holding'].required = False
+#         self.fields['holding'].widget.attrs['disabled'] = True
+      
+        # Same thing with the type of transaction we are doing.
+        self.fields['type'].required = True
+        self.fields['type'].widget.attrs['disabled'] = False
+      
+        
+#     def clean_holding(self):
+#         # since we have it disabled, we need to put it back to something as 'clean'
+#         print "cleaned holding %s" % self.cleaned_data['holding']
+#         return Holding.objects.get(id=self.initial['holding_id'])
+    
+    def clean_type(self):
+        # disabled fields need clean values.
+        return self.initial['type']
+        
     class Meta:
-        model = AimController
-        fields = ('started',
-                  'control',
-                  'sellsafe',
-                  'buysafe', 
-                  'buymin',
-                  'sellmin',
-                  'buyperc', 
-                  'sellperc',
-                  )
-
+        model = Transaction
+#         fields = ('date', 'shares', 'price', 'holding', 'type' )
+        fields = ('date', 'shares', 'price', 'type' )
 
