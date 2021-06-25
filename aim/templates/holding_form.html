@@ -1,0 +1,13 @@
+{% extends "bootstrap.html" %}
+
+{% block content %}
+	<p> Holding_form.html</p>
+	
+    <form action="." method="POST">	{% csrf_token %}
+
+        {{ form.as_p }}
+        
+        <input type="submit" value="Submit" class="btn" />
+    </form>
+
+{% endblock %}

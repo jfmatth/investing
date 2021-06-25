@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<!-- bootstrap.html -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static "js/jquery-2.0.3.js" %}"> </script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static "js/bootstrap.js" %}"> </script>
+{% endblock %}
+
+{% block bodystart %}
+<div class="container">
+{% endblock %}
+
+{% block bodyend %}
+</div>
+
+   
+{% endblock %}

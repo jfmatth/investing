@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if object %}
+
+    <h1>Holding {{ object.stock }}</h1>
+    
+    <h2>AIM Information</h2>
+    
+    <table>
+        <tr>
+            <td>Shares</td>
+            <td>Next Buy</td>
+            <td>Next Sell</td>
+        </tr>
+        
+        <tr>
+            <td>{{object.shares}}</td>
+            <td>{{object.NextBuy}}</td>
+            <td>{{object.NextSell}}</td>
+        </tr>
+    </table>    
+    
+    <table>
+        <tr>Transactions</tr>
+        {% for t in object.transaction_set.all %}
+            <tr>
+                <td>{{ t }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}

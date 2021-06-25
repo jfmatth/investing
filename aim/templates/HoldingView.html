@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+	{{ block.super }}
+<!-- we don't need the google version turns out -->
+<!--	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
+<!-- -->
+	<script type="text/javascript">
+		$(function() {
+		
+			$.getJSON('/graph/{{object.symbol}}/', function(data) {
+				// Create the chart
+				$('#graph').highcharts('StockChart', {
+					rangeSelector : {
+						selected : 1
+					},
+		
+					title : {
+						text : '{{object.symbol}} Price history'
+					},
+					
+					exporting : {
+						enabled : true
+					},
+					
+					credits : {
+						enabled : true 
+					},
+					
+					{% if object.currentalert %}
+					yAxis : {
+						plotBands : [{
+							from : {{object.currentalert.buyprice}},
+							to :   {{object.currentalert.sellprice}},
+							color : 'rgba(68, 170, 213, 0.2)',
+						}]
+					},
+					{% endif %}
+				
+					
+					series : [{
+							name : '{{object.symbol}}',
+							data : data,
+							id: 'dataseries'
+					}
+					{% if object.holdingalert_set.all %} 
+						,{
+							name : "Alert Buy series",
+							data: [
+								{% for a in object.holdingalert_set.all|dictsort:"date" %}
+									[ {{a.jsdate}},{{a.buyprice}}]{% if not forloop.last %}, {% endif %}
+								{% endfor %}
+								]
+						},{
+							name : "Alert Sell series",
+							data: [
+								{% for a in object.holdingalert_set.all|dictsort:"date" %}
+									[ {{a.jsdate}},{{a.sellprice}}]{% if not forloop.last %}, {% endif %}
+								{% endfor %}
+								]
+						}
+					{% endif %}
+					
+					
+					{% if object.transaction_set.all %}
+					,{
+						type : 'flags',
+						data : [{
+					{% for t in object.transaction_set.all|dictsort:"date" %}
+								x : {{t.jsdate}},
+								title : '{{t.type}}@{{t.price}}',
+								text : '{{t.type}} {{t.shares}} @ {{t.price}}'
+							}{% if not forloop.last %},{ {% endif %}{% endfor %}],
+						onSeries : 'dataseries',
+						shape : 'squarepin'
+					}
+					{% endif %}
+					]
+				});
+			});
+		
+		});
+	</script>
+	
+	<script src="{% static "js/highstock.js" %}"> </script>
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+	<div class="page-header">
+		{% if not object.id %} 
+			<h1> New Holding </h1>
+		{% else %}
+			<h1> {{object.symbol}} 
+			<small> {{object.symbol.description}} </small>
+			in <small>{{object.portfolio}} </small>
+			</h1>
+			<a href="{% url "holding_delete" object.id %}" title="Delete this holding" type="button" class="btn btn-xs btn-danger pull-right" >D</a>
+		{% endif %}
+		
+		<a href="{% url "aim_main" %} ">Main Portfolio List</a>
+	</div>
+
+{% if object.id %} 					<!-- Only show if we are editing a record -->
+	{% if object.alert %}
+		{% if object.symbol.currentprice.close < object.currentalert.buyprice %}
+			<div class="alert alert-success">BUY ALERT ${{object.controller.BuyAmount}}</div>
+		{% else %}
+			<div class="alert alert-danger">SELL ALERT ${{object.controller.SellAmount}}</div>
+		{% endif %}
+	{% endif %}
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">Graph<span class="pull-right">Current Price = {{object.symbol.currentprice.close}} </span></div>
+		<div class="panel-body" id="graph">
+		</div>
+	</div>
+{% endif %}
+
+	<form role="form" class="form-inline" action="." method="post" >{% csrf_token %}
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				General
+			</div>
+			
+			<div class="panel-body"> 
+			
+			    {{ form.non_field_errors }}
+			
+			    {% for field in form %}
+			        <div class="form-group">
+			            {{ field.errors }}
+			            {{ field.label_tag }} {{ field }}
+			        </div>
+			    {% endfor %}
+			    
+				
+			</div> <!-- panel-body -->
+			<div class="panel-footer">
+			
+			    {% if object.id %}
+				    <!-- general fields here, not editable -->
+					<label>Shares:</label> {{ object.shares | floatformat:3}}
+					<label>Value:</label>  ${{ object.value | floatformat:3}}
+					<label>Cost:</label>   ${{ object.cost  | floatformat:3}}
+					<label>Profit:</label> ${{object.profit | floatformat:3}}
+					<label>ROI:</label>    {{object.roi     | floatformat:3}}%
+				{% endif %}
+				  <input type="submit" name="_holding" class="btn btn-primary pull-right"></button>
+				  <div class="clearfix"></div>
+			</div>
+			
+		</div>
+	</form>
+
+<!-- --> 
+<!-- TRANSACTIONS -->
+<!-- --> 
+{% if object.id %} 
+	<div class="panel panel-primary">
+		<div class="panel-heading">Transactions</div>
+		<div class="panel-body">
+			{% if object.transaction_set.all %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Type</th>
+						<th>Qty</th>
+						<th>Price</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for t in object.transaction_set.all|dictsortreversed:"date" %}
+					<tr {% if t.type == "Buy" %} class="success" %} {% else %} class="danger" %} {% endif %} >
+						<td>{{t.date}}</td>
+						<td>{{t.type}}</td>
+						<td>{{t.shares}}</td>
+						<td>{{t.price}}</td>
+						<td>{{t.total_sale}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>		
+			</table>
+			{% endif %}
+			<div class="panel-footer">
+				  <a href="{% url "transaction_buy" object.id %}" type="button" class="btn btn-success" >Buy </a>
+				  <a href="{% url "transaction_sell" object.id %}" type="button" class="btn btn-danger" >Sell </a>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">Advice</div>
+		<div class="panel-body">
+			{% if object.holdingalert_set.all %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Buy Limit</th>
+						<th>Sell Limit</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for a in object.holdingalert_set.all|dictsortreversed:"date" %}
+					<tr>
+						<td>{{a.date}}</td>
+						<td>{{a.buyprice}}</td>
+						<td>{{a.sellprice}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>		
+			</table>
+			{% endif %}
+		</div>
+	</div>
+	
+	<form role="form" action="." method="post" >{% csrf_token %}
+		<div class="panel panel-primary">
+			<div class="panel-heading">AIM Control parameters</div>
+			<div class="panel-body">
+			    {% for field in controlform %}
+			        <div class="form-group">
+			            {{ field.errors }}
+			            {{ field.label_tag }} {{ field }}
+			        </div>
+			    {% endfor %}
+
+			</div>
+			<div class="panel-footer">
+				  <input type="submit" name="_control" class="btn btn-primary pull-right"></button>
+				  <div class="clearfix"></div>
+			</div>
+		</div>
+	</form>
+
+	
+{% endif %}
+
+	
+{% endblock %}
+
+

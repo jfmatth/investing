@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1> Portfolio Delete</h1>
+	<h2> Are you sure you want to delete the portfolio {{object}}, and all it's Holdings? </h2>
+	
+	{% if object.holding_set.all %}
+		{% for h in object.holding_set.all %}
+			<p>{{h}}</p>
+		{% endfor %}
+	{% endif %}
+	
+    <form action="." method="POST">	{% csrf_token %}
+        <input type="submit" value="Delete" />
+    </form>
+
+{% endblock %}
