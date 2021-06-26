@@ -8,6 +8,6 @@ django = "*"
 django-allauth = "*"
 pylint = "*"
 whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
-

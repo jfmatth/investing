@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 
-from aim.models import Portfolio, Holding, AimController
+from aim.models import Portfolio, Holding, AimController, Transaction
 
 import logging
 
