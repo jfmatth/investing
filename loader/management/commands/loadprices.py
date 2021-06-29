@@ -12,6 +12,9 @@ import csv
 import datetime
 from decimal import Decimal
 
+# help fix encoding errors, django 1.x did automagically
+from django.utils.encoding import force_str
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -64,7 +67,7 @@ def EODDATA_loader(loaddate, history):
 
             ftp.retrbinary("RETR %s" % exchangefile, mfile.write)
 
-            e.data = mfile.getvalue()
+            e.data = force_str( mfile.getvalue() )
             e.loaded = False
             e.save()
 
@@ -87,7 +90,8 @@ def EODDATA_loader(loaddate, history):
 
         ftp.retrbinary("RETR %s" % pricefile, mfile.write)
 
-        p = ExchangeSplit(exchange=x, data=mfile.getvalue(), loaded=False )
+        # p = ExchangeSplit(exchange=x, data=mfile.getvalue(), loaded=False )
+        p = ExchangeSplit(exchange=x, data=force_str(mfile.getvalue()), loaded=False )
         p.save()
 
         logger.info("%s Splits Saved" % pricefile)
@@ -111,7 +115,8 @@ def EODDATA_loader(loaddate, history):
 
             ftp.retrbinary("RETR %s" % pricefile, mfile.write)
             logger.debug("got file")
-            p = ExchangePrice(exchange=e, data=mfile.getvalue(), loaded=False)
+            # p = ExchangePrice(exchange=e, data=mfile.getvalue(), loaded=False)
+            p = ExchangePrice(exchange=e, data=force_str(mfile.getvalue()), loaded=False)
             p.save()
 
             logger.debug("%s Prices Saved" % pricefile)
