@@ -3,8 +3,8 @@ from django.views.generic import ListView, TemplateView, UpdateView, CreateView,
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 
-from aim.models import Portfolio, Holding, HoldingAlert
-from aim.forms import PortfolioForm, HoldingForm, ControlForm
+from aim.models import Portfolio, Holding, HoldingAlert, Transaction
+from aim.forms import PortfolioForm, HoldingForm, ControlForm, TransactionForm
 
 import logging
 
@@ -76,7 +76,7 @@ class HoldingCreateView(CreateView):
     template_name = "HoldingView.html"
 
     portfolio = None
-
+    
     def get_form(self, form_class=None):
         form = super(HoldingCreateView, self).get_form(form_class)
         
@@ -154,4 +154,51 @@ class HoldingDeleteView(DeleteView):
     
     def get_queryset(self):
         return Holding.objects.filter(portfolio__owner=self.request.user)
+
+
+#===============================================================================
+# Transaction
+#===============================================================================
+class TransactionCreate(CreateView):
+    model = Transaction
+    form_class = TransactionForm
+#     success_url = "/aim/"
+
+    type = None
+
+#     def get_queryset(self):
+#         return Transaction.objects.filter(holding__portfolio__owner = self.request.user)
+
+    def get_form(self, form_class=None):
+        form = super(TransactionCreate, self).get_form(form_class)
+        holding = Holding.objects.get(pk=self.kwargs['holding_id'])
+
+        if holding.portfolio.owner != self.request.user:
+            raise
+
+        form.instance.holding = holding
+
+        return form
+
+    def form_valid(self, form):
+        form = super(TransactionCreate,self).form_valid(form)
+
+        return form
+
+    def get_initial(self):
+        # we get the type of transaction from the URLconf as a named parameter.
+        self.initial['type'] = self.type
+        
+        return super(TransactionCreate,self).get_initial()
+
+
+class TransactionDeleteView(DeleteView):
+    model = Transaction
+    template_name = "aim/TransactionDelete.html"
+    success_url = "/aim/"
+    
+    def get_queryset(self):
+        return Transaction.objects.filter(holding__portfolio__owner=self.request.user)
+
+
 
