@@ -9,5 +9,6 @@ django-allauth = "*"
 pylint = "*"
 whitenoise = "*"
 dj-database-url = "*"
+pyex = "*"
 
 [dev-packages]
