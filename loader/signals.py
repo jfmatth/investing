@@ -1,11 +1,9 @@
 # module to recieve signals and execute the code
 
-from django.dispatch import receiver, Signal
+from django.dispatch import Signal
 
-# define the signal
+from loader.loader_iexcloud import receiverLoadSymbols
+
+# define the signal, and connect it
 signalLoadSymbols = Signal()
-
-@receiver(signalLoadSymbols)
-def receiverLoadSymbols(sender, **kwargs):
-    print("received signal")
-
+signalLoadSymbols.connect(receiverLoadSymbols)

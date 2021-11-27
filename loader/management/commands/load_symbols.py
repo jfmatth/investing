@@ -15,7 +15,7 @@ import pyEX
 # help fix encoding errors, django 1.x did automagically
 from django.utils.encoding import force_str
 
-from aim.models import Symbol
+# from aim.models import Symbol
 
 import logging
 logger = logging.getLogger(__name__)
