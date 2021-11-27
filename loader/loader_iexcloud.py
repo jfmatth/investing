@@ -1,24 +1,20 @@
-# Main code for loader, loading prices, Symbols, etc from source
-
-# Moved to use signals instead of putting allthe code in management file
-
-from django.db import transaction
+# Moved to use signals instead of putting allthe code in a management file
 import pyEX
 import os
+
+from django.db import transaction
+
+from aim.models import Symbol
+from aim.models import Holding
+from aim.models import Price
 
 import logging
 logger = logging.getLogger(__name__)
 
 
-# def receiverLoadSymbols(sender, **kwargs):
-#     print("received signal")
-
-
 @transaction.atomic
- def receiverLoadSymbols(sender, **kwargs):
-    logger.info("Main()")
-
-    from aim.models import Symbol
+def LoadSymbols(sender, **kwargs):
+    logger.info("LoadSymbols")
 
     environment = ""
     token = os.getenv("IEX_TOKEN", "None")
@@ -40,6 +36,48 @@ logger = logging.getLogger(__name__)
                 )
 
     logger.info(f"Loaded {len(symbols)} Symbols")
-    
-    logger.info("Main() done")
+   
+    logger.info("receiverLoadSymbols() done")
+
     return True
+
+
+def LoadPricesForSymbol(sender, **kwargs):
+    # loads the prices for a particular symbol
+    logger.info("LoadPricesForSymbol")
+
+    symbol = kwargs.get("symbol")
+    history = "history" in kwargs
+
+    if symbol:
+
+        s = Symbol.objects.get(symbol)
+        
+        if history:
+            print(f"Downloading some history too")
+        else:
+            print( f"Downloading prices for {symbol} ")
+
+            
+
+
+
+    else:
+        print(f"Error - No symbol sent")
+
+    return True
+
+
+def LoadPricesForDay(sender, **kwargs):
+    # loads the prices for all holdings for today
+    logger.info("LoadPricesForDay")
+
+    holdingList = Holding.objects.all().distinct()
+    logger.info(f"There are {len(holdingList)} Holdings to pull down" )
+
+    for h in holdingList:
+        LoadPricesForSymbol(True, symbol=h.symbol )
+
+
+    return True
+

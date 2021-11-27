@@ -2,8 +2,14 @@
 
 from django.dispatch import Signal
 
-from loader.loader_iexcloud import receiverLoadSymbols
+from loader.loader_iexcloud import LoadSymbols, LoadPricesForDay, LoadPricesForSymbol
 
-# define the signal, and connect it
+# define the signals, and connect them
 signalLoadSymbols = Signal()
-signalLoadSymbols.connect(receiverLoadSymbols)
+signalLoadSymbols.connect(LoadSymbols)
+
+signalLoadPricesDay = Signal()
+signalLoadPricesDay.connect(LoadPricesForDay)
+
+signalLoadPricesSymbol = Signal()
+signalLoadPricesSymbol.connect(LoadPricesForSymbol)
