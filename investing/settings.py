@@ -196,3 +196,6 @@ SESSION_COOKIE_AGE = 900 # 15min
 
 # new for 3.2
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# pyEX
+TOKEN = os.getenv("IEX_TOKEN", "None")
