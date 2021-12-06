@@ -42,28 +42,24 @@ def LoadPricesForSymbol(sender, **kwargs):
     # loads the prices for a particular symbol
     logger.info("LoadPricesForSymbol")
 
-    symbol = kwargs.get("symbol")
-    history = "history" in kwargs
+    sObj = kwargs.get("symbol")
 
-    if symbol:
-        # symbol is an object from the ORM, no need to look it up.
+    if sObj:
         
-        if history:
-            logger.info(f"Downloading some history too")
-        else:
-            logger.info( f"Downloading prices for {symbol} ")
+        # symbol is an object from the ORM, no need to look it up.
+        logger.info( f"Downloading prices for {sObj.name} ")
 
-            quote = pyClient.quote(symbol.name)
+        quote = pyClient.quote(sObj.name)
 
-            # quote has all the data we need, now find / create a price entry and save it. 
-            # all dates are EPOCH, so need to divide by 1000 to get correct date.
-            # also, Sandbox dates are 2+yrs in the future.
-            # date   = models.DateField(db_index=True, blank=False)
-            # high   = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-            # low    = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-            # close  = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-            # volume = models.IntegerField(blank=False)
-            
+        # quote has all the data we need, now find / create a price entry and save it. 
+        # all dates are EPOCH, so need to divide by 1000 to get correct date.
+        # also, Sandbox dates are 2+yrs in the future.
+        # date   = models.DateField(db_index=True, blank=False)
+        # high   = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
+        # low    = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
+        # close  = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
+        # volume = models.IntegerField(blank=False)
+        print(quote)
 
 
 
