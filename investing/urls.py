@@ -16,4 +16,7 @@ urlpatterns = [
 
     # application aim
     path('aim/', include('aim.urls')),
+
+    path('graph/', include('graphs.urls')),
+
 ]
