@@ -8,6 +8,7 @@ django = "*"
 django-allauth = "*"
 pylint = "*"
 whitenoise = "*"
+waitress = "*"
 
 [dev-packages]
 
