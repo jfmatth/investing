@@ -8,6 +8,8 @@ from aim.models import Symbol
 from aim.models import Holding
 from aim.models import Price
 
+from datetime import date
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -37,19 +39,20 @@ def LoadSymbols(sender, **kwargs):
 
     return True
 
-
+# loads the prices for a particular symbol
 def LoadPricesForSymbol(sender, **kwargs):
-    # loads the prices for a particular symbol
     logger.info("LoadPricesForSymbol")
 
     sObj = kwargs.get("symbol")
 
     if sObj:
-        
-        # symbol is an object from the ORM, no need to look it up.
-        logger.info( f"Downloading prices for {sObj.name} ")
+        # lookup the symbol object from Symbols
+        s = Symbol.objects.get(name=sObj)
 
-        quote = pyClient.quote(sObj.name)
+        # symbol is a string
+        logger.info( f"Downloading prices for {s} ")
+
+        quote = pyClient.quote(s.name)
 
         # quote has all the data we need, now find / create a price entry and save it. 
         # all dates are EPOCH, so need to divide by 1000 to get correct date.
@@ -59,9 +62,25 @@ def LoadPricesForSymbol(sender, **kwargs):
         # low    = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
         # close  = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
         # volume = models.IntegerField(blank=False)
-        print(quote)
 
+        sdate = quote['iexCloseTime']
+        tdate = date.fromtimestamp(int(sdate)/1000)
+        print (f'date: {sdate} -> {tdate}')
 
+        if not Price.objects.filter(symbol=s, date=tdate):
+
+            p = Price()
+
+            p.date = tdate
+            p.symbol = s
+            p.high = quote['high']
+            p.low = quote['low']
+            p.close = quote['iexClose']
+            p.volume = quote['iexVolume']
+
+            p.save()
+
+            print(f"{p}")
 
     else:
         print(f"Error - No symbol sent")

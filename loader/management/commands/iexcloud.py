@@ -211,7 +211,7 @@
 
 
 from django.core.management.base import BaseCommand
-from loader.signals import signalLoadSymbols
+from loader.signals import signalLoadSymbols, signalLoadPricesDay
 
 class Command(BaseCommand):
     help = "loads all stock symbols from IEX_CLOUD"
@@ -220,5 +220,6 @@ class Command(BaseCommand):
         self.stdout.write("Management Command iexcloud Starting")
 
         signalLoadSymbols.send(True)
+        signalLoadPricesDay(True)
 
         self.stdout.write("iexcloud Done")
