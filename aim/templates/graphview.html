@@ -1,0 +1,8 @@
+[
+{% for price in object_list %}
+  [
+    {{price.jsdate}},
+    {{price.close}}
+  ]{% if not forloop.last %},{% endif %} 
+{% endfor %}
+]
