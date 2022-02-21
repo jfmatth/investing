@@ -1,14 +1,17 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
 [packages]
 django = "4"
 django-allauth = "*"
-pylint = "*"
+pyex = "*"
 whitenoise = "*"
 dj-database-url = "*"
 waitress = "*"
 
 [dev-packages]
+
+[requires]
+python_version = "3.8"
