@@ -8,7 +8,7 @@ django = "4.*"
 django-allauth = "*"
 pylint = "*"
 whitenoise = "*"
+dj-database-url = "*"
 waitress = "*"
 
 [dev-packages]
-

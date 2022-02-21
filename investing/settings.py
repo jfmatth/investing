@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # Aim
     'aim',
+    'loader',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,50 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
+
+
+# FTP information
+FTPLOGIN = os.getenv("FTPLOGIN", None)
+FTPPASS  = os.getenv("FTPPASS", None)
+
+# EMAIL settings
+ADMINS = ( ('John', 'john@compunique.com'),)
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL_USER", None)
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD", None) 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'loader': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'alerter': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+
+    },
+}
+
+SPLITS = os.environ.get("SPLITS", True)
+
+LOGIN_REDIRECT_URL = "/aim"
+
+# Session stuff
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 900 # 15min
+
+
+# new for 3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
