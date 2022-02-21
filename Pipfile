@@ -4,10 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+django = "4.*"
 django-allauth = "*"
 pylint = "*"
 whitenoise = "*"
 dj-database-url = "*"
+waitress = "*"
 
 [dev-packages]
