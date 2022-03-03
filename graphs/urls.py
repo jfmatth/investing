@@ -10,6 +10,6 @@ from graphs.views import graphview
 # ]
 
 urlpatterns = [
-    path('<str:symbol>', graphview.as_view() ),
+    path('<str:symbol>/', graphview.as_view() ),
     # url(r'test/(?P<symbol>\w+)/$', testgraphview.as_view() ),
 ]

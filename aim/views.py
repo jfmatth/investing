@@ -162,8 +162,9 @@ class HoldingDeleteView(DeleteView):
 class TransactionCreate(CreateView):
     model = Transaction
     form_class = TransactionForm
-#     success_url = "/aim/"
-
+    success_url = "/aim/"
+    
+    template_name = "transaction_form.html"
     type = None
 
 #     def get_queryset(self):
