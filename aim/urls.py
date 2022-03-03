@@ -56,12 +56,12 @@ urlpatterns = [
     # url(r'^transaction/(?P<holding_id>\d+)/buy/$',
     #     login_required(TransactionCreate.as_view(type="Buy") ),
     #     name = "transaction_buy"),
-    path('transaction/<int:holding_id>/buy', login_required(TransactionCreate.as_view(type="Buy") ), name="transaction_buy"),
-                       
+    path('transaction/buy/<int:holding_id>/', login_required(TransactionCreate.as_view(type="Buy") ), name="transaction_buy"),
+
     # url(r'^transaction/(?P<holding_id>\d+)/sell/$',
     #     login_required(TransactionCreate.as_view(type="Sell") ),
     #     name = "transaction_sell"),
-    path('transaction/<int:holding_id>/sell', login_required(TransactionCreate.as_view(type="Sell"`) ), name="transaction_sell"),
+    path('transaction/sell/<int:holding_id>/', login_required(TransactionCreate.as_view(type="Sell") ), name="transaction_sell"),
 
     # url(r'^transaction/delete/(?P<pk>\d+)/$',
     #     login_required(TransactionDeleteView.as_view()),
