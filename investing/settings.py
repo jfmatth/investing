@@ -34,18 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    # Aim et al
+    'aim',
+    'loader',
+    'alerter',
+
     # Add apps for django-allauth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
-    # Humanize 
-
-    # Aim
-    'aim',
-    'loader',
-    'alerter',
 ]
 
 MIDDLEWARE = [
