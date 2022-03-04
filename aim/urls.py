@@ -15,7 +15,7 @@ urlpatterns = [
     # url(r'^portfolio/(?P<pk>\d+)/$',
     #     login_required(PortfolioUpdate.as_view()),
     #     name = "portfolio_edit" ),
-    path('portfolio/<int:pk>', login_required( PortfolioUpdate.as_view() ), name="portfolio_edit" ),
+    path('portfolio/<int:pk>/', login_required( PortfolioUpdate.as_view() ), name="portfolio_edit" ),
     
     # url(r'^portfolio/add/$',
     #     login_required(PortfolioCreate.as_view()),
@@ -25,7 +25,7 @@ urlpatterns = [
     # url(r'^portfolio/delete/(?P<pk>\d+)/$',
     #     login_required(PortfolioDelete.as_view()),
     #     name = "portfolio_delete"),
-    path('portfolio/delete/<int:pk>', login_required( PortfolioDelete.as_view() ), name="portfolio_delete"), 
+    path('portfolio/delete/<int:pk>/', login_required( PortfolioDelete.as_view() ), name="portfolio_delete"), 
 
 
     # Holding URL's
@@ -43,13 +43,13 @@ urlpatterns = [
     # url(r'^holding/(?P<pk>\d+)/$',
     #     login_required(HoldingUpdateView.as_view()),
     #     name = "holding_view"),
-    path('holding/<int:pk>', login_required( HoldingUpdateView.as_view()), name="holding_view" ),
+    path('holding/<int:pk>/', login_required( HoldingUpdateView.as_view()), name="holding_view" ),
     
 
     # url(r'^holding/delete/(?P<pk>\d+)/$',
     #     login_required(HoldingDeleteView.as_view()),
     #     name = "holding_delete"),
-    path('holding/delete/<int:pk>',login_required( HoldingDeleteView.as_view() ), name="holding_delete"),
+    path('holding/delete/<int:pk>/',login_required( HoldingDeleteView.as_view() ), name="holding_delete"),
 
 
     # Transaction URL's
@@ -66,13 +66,8 @@ urlpatterns = [
     # url(r'^transaction/delete/(?P<pk>\d+)/$',
     #     login_required(TransactionDeleteView.as_view()),
     #     name="transaction_delete"),
-    path('transaction/delete/<int:pk>', login_required(TransactionDeleteView.as_view() ), name = "transaction_delete"),
+    path('transaction/delete/<int:pk>/', login_required(TransactionDeleteView.as_view() ), name = "transaction_delete"),
     
-    # url(r'amiok/$',
-    #     TemplateView.as_view(template_name="aim/amiok.html")
-    #     ),
-
-
 
 
 
