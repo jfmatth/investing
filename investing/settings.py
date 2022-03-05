@@ -34,18 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    # Aim et al
+    'aim',
+    'loader',
+    'alerter',
+
     # Add apps for django-allauth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
-    # Humanize 
-
-    # Aim
-    'aim',
-    'loader',
-    'alerter',
 ]
 
 MIDDLEWARE = [
@@ -64,8 +63,7 @@ ROOT_URLCONF = 'investing.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'DIRS' : [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -192,8 +190,8 @@ SPLITS = os.environ.get("SPLITS", True)
 LOGIN_REDIRECT_URL = "/aim"
 
 # Session stuff
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 900 # 15min
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_AGE = 900 # 15min
 
 
 # new for 3.2

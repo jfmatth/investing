@@ -68,3 +68,4 @@ activate.bat
 environment.cmd
 python
 *.ipynb
+.env
