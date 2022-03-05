@@ -1,4 +1,8 @@
+ARG TOKEN
+
 FROM python:3.8-slim
+
+ENV IEX_TOKEN $(TOKEN)
 
 # New for Pipenv - Credit to https://jonathanmeier.io/using-pipenv-with-docker/
 RUN pip install pipenv
