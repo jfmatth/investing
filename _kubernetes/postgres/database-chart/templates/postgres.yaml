@@ -53,6 +53,11 @@ spec:
       repos:
       {{- range $index, $repo := .Values.multiBackupRepos }}
       - name: repo{{ add $index 1 }}
+
+        schedules:
+          full: "0 1 * * *"
+          incremental: "0 */4 * * *"
+                
         {{- if $repo.volume }}
         volume:
           volumeClaimSpec:

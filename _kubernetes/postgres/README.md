@@ -1,16 +1,22 @@
-# Installing the Postgres Operator 5.x
+# Installing the Postgres Operator 5.x and database
 
 https://access.crunchydata.com/documentation/postgres-operator/5.0.5/installation/helm/
 
 ## Installing the operator
 
+
 ```
+cd postgres/pgo-install-chart
 kubectl create namespace pgo-operator
 helm install pgo-operator . -n pgo-operator
 ```
 
 ## Create the DB
-Helm chart does that
+Create the DB in the current namespace, or whichever you want, it doesn't (nor should be) the same as the operator
+```
+cd postgres/postgres/database-chart
+helm install sotb-db .
+```
 
 ## get the URI for the DB in the app
 

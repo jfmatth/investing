@@ -71,7 +71,7 @@ instanceName: instance1
 
 # instanceSize sets the size of the volume that contains the data. This defaults
 # to the value below. Settings "instances" overrides this value.
-instanceSize: 1Gi
+instanceSize: 10Gi
 
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
@@ -167,7 +167,7 @@ instanceReplicas: 1
 
 # backupsSize sets the storage size of the backups to a volume in Kubernetes.
 # can be overridden by "pgBackRestConfig", if set. Defaults to the value below.
-# backupsSize: 1Gi
+backupsSize: 10Gi
 
 # s3 allows for AWS S3 or an S3 compatible storage system to be used for
 # backups. This allows for a quick setup with S3; if you need more advanced
@@ -222,9 +222,14 @@ instanceReplicas: 1
 # Below is an example that enables one of each backup type. Note all of the
 # available quickstart options are presented below; please see the backup types
 # if you want to see how each option works.
-# multiBackupRepos:
-# - volume:
-#     backupsSize: 1Gi
+multiBackupRepos:
+- volume:
+    backupsSize: 10Gi
+
+- schedules:
+    full: "0 1 * * *"
+    incremental: "0 */4 * * *"
+
 # - s3:
 #     bucket: ""
 #     endpoint: ""
