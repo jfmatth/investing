@@ -2,8 +2,9 @@
 
 https://access.crunchydata.com/documentation/postgres-operator/5.0.5/installation/helm/
 
-## Installing the operator
+## Installing the CrunchyData Postgres operator (v5.05)
 
+Take note that the operator is in it's own namespace
 
 ```
 cd postgres/pgo-install-chart
@@ -11,7 +12,8 @@ kubectl create namespace postgres-operator
 helm install pgo . -n postgres-operator
 ```
 
-## Create the DB
+## Create the Database for sotb
+
 Create the DB in the current namespace, or whichever you want, it doesn't (nor should be) the same as the operator
 ```
 cd postgres/postgres/sotb-database-chart
