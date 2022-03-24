@@ -15,7 +15,7 @@ name: sotb
 # available as one of the "RELATED_IMAGE_POSTGRES_..." images as part of the PGO
 # installation if you want to deploy the image without setting the "postgres"
 # image variable. This defaults to the below value.
-postgresVersion: 13
+postgresVersion: 14
 
 # postGISVersion if sets and coupled with a PostGIS enabled container, enables
 # PostGIS. This version number needs to be available as one of the
@@ -76,12 +76,12 @@ instanceSize: 10Gi
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
 # overrides this value.
-instanceMemory: 128Mi
+# instanceMemory: 128Mi
 
 # instanceCPU sets the CPU limit for the Postgres instances. This defaults to
 # no limit being set, but an example value is set below. Setting "instances"
 # overrides this value.
-instanceCPU: 1000m
+# instanceCPU: 1000m
 
 # instanceReplicas lets you set the total number of Postgres replicas. This
 # defaults to the value below. More than on replica enables high availability
@@ -226,9 +226,9 @@ multiBackupRepos:
 - volume:
     backupsSize: 10Gi
 
-- schedules:
-    full: "0 1 * * *"
-    incremental: "0 */4 * * *"
+# - schedules:
+#     full: "0 1 * * *"
+#     incremental: "0 */4 * * *"
 
 # - s3:
 #     bucket: ""
