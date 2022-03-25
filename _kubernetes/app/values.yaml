@@ -74,3 +74,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+jobs:
+  loadprices: true
+
+  crontab: "0 23 * * *"
