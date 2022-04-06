@@ -76,12 +76,12 @@ instanceSize: 10Gi
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
 # overrides this value.
-# instanceMemory: 128Mi
+instanceMemory: 128Mi
 
 # instanceCPU sets the CPU limit for the Postgres instances. This defaults to
 # no limit being set, but an example value is set below. Setting "instances"
 # overrides this value.
-# instanceCPU: 1000m
+instanceCPU: 100m
 
 # instanceReplicas lets you set the total number of Postgres replicas. This
 # defaults to the value below. More than on replica enables high availability

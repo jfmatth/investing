@@ -1,0 +1,14 @@
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:  
+    - host: investing.164.92.83.142.nip.io
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

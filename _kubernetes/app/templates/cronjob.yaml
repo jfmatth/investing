@@ -1,7 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: crontest
+  name: {{ include "sotb.fullname" . }}
+  labels:
+    {{- include "sotb.labels" . | nindent 4 }}
 spec:
   schedule: "0 23 * * *"
   jobTemplate:
