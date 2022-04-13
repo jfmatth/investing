@@ -3,7 +3,7 @@ ingress:
   className: ""
   annotations: {}
   hosts:  
-    - host: investing.164.92.83.142.nip.io
+    - host: investing.192.168.2.101.nip.io
       paths:
         - path: /
           pathType: ImplementationSpecific
