@@ -35,14 +35,20 @@ def do_alerts():
         if alert_set:
             logger.info("Sending Alert email")
 
-            try:
-                ctx = {"alert_set" : alert_set }
-                message = render_to_string("alerter/email_report.html",ctx)
-                mfrom = settings.EMAIL_HOST_USER
+            # try:
+            #     ctx = {"alert_set" : alert_set }
+            #     message = render_to_string("alerter/email_report.html",ctx)
+            #     mfrom = settings.EMAIL_HOST_USER
 
-                send_mail(subject="Portfolio alerts", message="", html_message=message, from_email=mfrom, recipient_list=[u.email,])
-            except:
-                logger.info("error sending email")
+            #     send_mail(subject="Portfolio alerts", message="", html_message=message, from_email=mfrom, recipient_list=[u.email,])
+            # except:
+            #     logger.info("error sending email")
+            ctx = {"alert_set" : alert_set }
+            message = render_to_string("email_report.html",ctx)
+            mfrom = settings.EMAIL_HOST_USER
+
+            send_mail(subject="Portfolio alerts", message="", html_message=message, from_email=mfrom, recipient_list=[u.email,])
+                
 
 
 class Command(BaseCommand):

@@ -1,0 +1,8 @@
+spec:
+  backups:
+    pgbackrest:
+      repos:
+      - name: repo1
+        schedules:
+          full: "0 1 * * *"
+          incremental: "0 */4 * * *"

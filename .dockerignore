@@ -1,0 +1,5 @@
+db.sqlite3
+Dockerfile
+.kubernetes/
+.vscode/
+© 2022 GitHub, Inc.
