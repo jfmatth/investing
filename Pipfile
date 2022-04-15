@@ -9,6 +9,7 @@ django-allauth = "*"
 pyex = "*"
 whitenoise = "*"
 dj-database-url = "*"
+waitress = "*"
 
 [dev-packages]
 

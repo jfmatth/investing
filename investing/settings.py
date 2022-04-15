@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Aim
     'aim',
     'loader',
+    'alerter',
 ]
 
 MIDDLEWARE = [
