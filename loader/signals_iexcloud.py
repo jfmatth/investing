@@ -15,12 +15,13 @@ logger = logging.getLogger(__name__)
 
 # setup pyEX client with correct environment
 import pyEX
-environment = ("sandbox" if settings.TOKEN[0] == "T" else "v1") 
+# check the first character to see if it's T or not.
+environment = ("sandbox" if settings.IEX_TOKEN[0] == "T" else "v1") 
 pyClient = pyEX.Client(version=environment)
 
 @transaction.atomic
 def LoadSymbols(sender, **kwargs):
-    logger.info("LoadSymbols")
+    logger.info("IEX LoadSymbols")
 
     logger.info(f"Retreiving symbols")
     symbols = pyClient.symbols()
@@ -34,10 +35,9 @@ def LoadSymbols(sender, **kwargs):
                 )
 
     logger.info(f"Loaded {len(symbols)} Symbols")
-   
-    logger.info("receiverLoadSymbols() done")
 
     return True
+
 
 # loads the prices for a particular symbol
 def LoadPricesForSymbol(sender, **kwargs):
@@ -54,33 +54,23 @@ def LoadPricesForSymbol(sender, **kwargs):
 
         quote = pyClient.quote(s.name)
 
-        # quote has all the data we need, now find / create a price entry and save it. 
-        # all dates are EPOCH, so need to divide by 1000 to get correct date.
-        # also, Sandbox dates are 2+yrs in the future.
-        # date   = models.DateField(db_index=True, blank=False)
-        # high   = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-        # low    = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-        # close  = models.DecimalField(max_digits=12, decimal_places=3, blank=False)
-        # volume = models.IntegerField(blank=False)
-
         sdate = quote['iexCloseTime']
         tdate = date.fromtimestamp(int(sdate)/1000)
-        print (f'date: {sdate} -> {tdate}')
-
+        
         if not Price.objects.filter(symbol=s, date=tdate):
 
             p = Price()
 
             p.date = tdate
             p.symbol = s
-            p.high = quote['high']
-            p.low = quote['low']
+
+            # account for when things are null
+            p.high = (0 if quote['high'] ==None else quote['high'])
+            p.low =  (0 if quote['low']  ==None else quote['low'])
             p.close = quote['iexClose']
             p.volume = quote['iexVolume']
 
             p.save()
-
-            print(f"{p}")
 
     else:
         print(f"Error - No symbol sent")

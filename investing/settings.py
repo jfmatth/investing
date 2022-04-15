@@ -151,7 +151,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
 
-
 # FTP information
 FTPLOGIN = os.getenv("FTPLOGIN", None)
 FTPPASS  = os.getenv("FTPPASS", None)
@@ -199,4 +198,5 @@ LOGIN_REDIRECT_URL = "/aim"
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # pyEX
-TOKEN = os.getenv("IEX_TOKEN", "None")
+IEX_TOKEN = os.getenv("IEX_TOKEN", "None")
+
