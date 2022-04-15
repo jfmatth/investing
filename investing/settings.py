@@ -150,7 +150,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
 
-
 # FTP information
 FTPLOGIN = os.getenv("FTPLOGIN", None)
 FTPPASS  = os.getenv("FTPPASS", None)
@@ -198,4 +197,5 @@ SESSION_COOKIE_AGE = 900 # 15min
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # pyEX
-TOKEN = os.getenv("IEX_TOKEN", "None")
+IEX_TOKEN = os.getenv("IEX_TOKEN", "None")
+

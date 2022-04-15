@@ -217,9 +217,10 @@ class Command(BaseCommand):
     help = "loads all stock symbols from IEX_CLOUD"
 
     def handle(self, *args, **options):
-        self.stdout.write("Management Command iexcloud Starting")
+        self.stdout.write("Signaling for stock symbols / prices / splits")
 
         signalLoadSymbols.send(True)
+
         signalLoadPricesDay(True)
 
         self.stdout.write("iexcloud Done")
