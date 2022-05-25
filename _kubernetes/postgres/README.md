@@ -26,6 +26,8 @@ helm install sotb-db .
 Adapting https://access.crunchydata.com/documentation/postgres-operator/v5/quickstart/#connect-using-a-port-forward to what we need
 
 ### setup port forward
+**You'll need to account for the namespace and add it to the command below**
+
 ```
 PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -o name -l postgres-operator.crunchydata.com/cluster=sotb,postgres-operator.crunchydata.com/role=master)
 kubectl  port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
