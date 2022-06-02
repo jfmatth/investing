@@ -2,7 +2,11 @@
 
 https://access.crunchydata.com/documentation/postgres-operator/5.0.5/installation/helm/
 
-## Installing the CrunchyData Postgres operator (v5.05)
+Check developer portal for updates  
+https://www.crunchydata.com/developers/download-postgres/containers/postgres-operator-5x
+
+
+## Installing the CrunchyData Postgres operator (v5.105)
 
 Take note that the operator is in it's own namespace
 
