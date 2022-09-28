@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: DATABASE_URL
-            valueFrom: { secretKeyRef: { name: sotb-pguser-adminsyymgnc, key: uri } }
+            valueFrom: { secretKeyRef: { name: db-pguser-adminsyymgnc, key: uri } }
           - name: FTPPASS
             valueFrom: { secretKeyRef: { name: investing, key: ftppass } }
           - name: FTPLOGIN
