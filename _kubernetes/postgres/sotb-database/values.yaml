@@ -9,7 +9,7 @@
 
 # name is the name of the cluster. This defaults to the name of the Helm
 # release.
-name: sotb
+name: db
 
 # postgresVersion sets the version to deploy. This version number needs to be
 # available as one of the "RELATED_IMAGE_POSTGRES_..." images as part of the PGO
@@ -76,12 +76,12 @@ instanceSize: 10Gi
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
 # overrides this value.
-instanceMemory: 128Mi
+# instanceMemory: 128Mi
 
 # instanceCPU sets the CPU limit for the Postgres instances. This defaults to
 # no limit being set, but an example value is set below. Setting "instances"
 # overrides this value.
-instanceCPU: 100m
+# instanceCPU: 100m
 
 # instanceReplicas lets you set the total number of Postgres replicas. This
 # defaults to the value below. More than on replica enables high availability
@@ -226,9 +226,9 @@ backupsSize: 10Gi
 # Below is an example that enables one of each backup type. Note all of the
 # available quickstart options are presented below; please see the backup types
 # if you want to see how each option works.
-multiBackupRepos:
-- volume:
-    backupsSize: 10Gi
+# multiBackupRepos:
+# - volume:
+#     backupsSize: 10Gi
 
 # - schedules:
 #     full: "0 1 * * *"

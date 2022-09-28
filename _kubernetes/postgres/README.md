@@ -1,12 +1,14 @@
+# Start at the Crunchy Deverloper site
+https://www.crunchydata.com/developers/download-postgres/containers/postgres-operator-5x  
+
+We are currently running 5. 
+
 # Installing the Postgres Operator 5.x and database
 
-https://access.crunchydata.com/documentation/postgres-operator/5.0.5/installation/helm/
-
-Check developer portal for updates  
-https://www.crunchydata.com/developers/download-postgres/containers/postgres-operator-5x
+https://access.crunchydata.com/documentation/postgres-operator/5.1.0/installation/helm/
 
 
-## Installing the CrunchyData Postgres operator (v5.105)
+## Installing the CrunchyData Postgres operator (v5.10)
 
 Take note that the operator is in it's own namespace
 
@@ -25,11 +27,10 @@ helm install sotb-db .
 ```
 
 
-
 ## Connect to the DB via PSQL
 Adapting https://access.crunchydata.com/documentation/postgres-operator/v5/quickstart/#connect-using-a-port-forward to what we need
 
-### setup port forward
+### (optional) setup port forward
 **You'll need to account for the namespace and add it to the command below**
 
 ```
@@ -52,16 +53,11 @@ psql -h localhost
 
 
 # notes
-## get the URI for the DB in the app
 
-An example of where the secret is for the DB
+## restart the DB
+from https://access.crunchydata.com/documentation/postgres-operator/5.0.5/tutorial/administrative-tasks/  
 
 ```
-spec:
- 1     containers:
-      - image: 
-        name: keycloak
-        env:
-        - name: DB_URL
-          valueFrom: { secretKeyRef: { name: sotb-pguser-sotb, key: uri } }
+kubectl patch postgrescluster/sotb-qa -n postgres-operator --type merge --patch '{"spec":{"metadata":{"annotations":{"restarted":"'"$(date)"'"}}}}'
 ```
+
