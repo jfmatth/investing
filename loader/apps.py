@@ -6,6 +6,6 @@ class LoaderConfig(AppConfig):
     name = 'loader'
 
     def ready(self) -> None:
-        import loader.signals
+        # import loader.signals
 
         return super().ready()

@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'investing.urls'
@@ -193,10 +194,6 @@ LOGIN_REDIRECT_URL = "/aim"
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SESSION_COOKIE_AGE = 900 # 15min
 
-
 # new for 3.2
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-# pyEX
-IEX_TOKEN = os.getenv("IEX_TOKEN", "None")
 
