@@ -69,3 +69,4 @@ environment.cmd
 python
 *.ipynb
 .env
+Pipfile.lock
